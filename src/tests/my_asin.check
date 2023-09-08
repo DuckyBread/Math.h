@@ -1,0 +1,23 @@
+#test my_asin_new_0
+  ck_assert_int_eq(my_asin(42352), asin(42352));
+  ck_assert_int_eq(my_asin(-35363), asin(-35363));
+  ck_assert_ldouble_eq_tol(my_asin(0), asin(0), MY_EPSILON);
+  ck_assert_ldouble_eq_tol(my_asin(-1), asin(-1), MY_EPSILON);
+  ck_assert_ldouble_eq_tol(my_asin(1), asin(1), MY_EPSILON);
+  ck_assert_ldouble_eq_tol(my_asin(0.666666), asin(0.666666), MY_EPSILON);
+  ck_assert_ldouble_eq_tol(my_asin(-0.333333), asin(-0.333333), MY_EPSILON);
+  ck_assert_ldouble_eq_tol(my_asin(0.999999), asin(0.999999), MY_EPSILON);
+  ck_assert_ldouble_eq_tol(my_asin(-0.888), asin(-0.888), MY_EPSILON);
+  ck_assert_ldouble_eq_tol(my_asin(DBL_MIN), asin(DBL_MIN), MY_EPSILON);
+  ck_assert_ldouble_nan(my_asin(NAN));
+  ck_assert_ldouble_nan(my_asin(DBL_MAX));
+  ck_assert_double_nan(my_asin(INFINITY));
+  ck_assert_double_nan(my_asin(-INFINITY));
+
+#test my_asin_new_1
+  long double my_out = 0.0;
+  long double std_out = 0.0;
+  double in[] = {-0, 1, 0.99, 0.167, 1.11e-6};
+  my_out = my_asin(in[_i]);
+  std_out = asin(in[_i]);
+  ck_assert_ldouble_eq_tol(my_out, std_out, 0.0000001);

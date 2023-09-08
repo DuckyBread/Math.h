@@ -1,0 +1,11 @@
+#test abs_test
+    int x = -25;    
+    ck_assert_uint_eq(my_abs(x), abs(x));
+    x = 25;    
+    ck_assert_uint_eq(my_abs(x), abs(x));
+
+//#test abs_test_new_1
+  //int numbers[8] = {0, 55, -20, 30, -120, -2147483648, 2147483647, 13};
+  //int my_out = my_abs(numbers[_i]);
+  //int std_out = abs(numbers[_i]);
+  //ck_assert_int_eq(my_out, std_out);

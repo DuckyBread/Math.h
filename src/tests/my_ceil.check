@@ -1,0 +1,29 @@
+#include <check.h>
+#include <math.h>
+
+#include "my_math.h"
+
+#test my_ceil_test
+  for (double i = -1000; i <= 10000; i += 0.1) {
+    ck_assert_double_eq_tol(ceil(i), my_ceil(i), MY_EPSILON);
+  }
+
+#test my_ceil_new_1
+  double numbers[8] = {50, 0, 23, -0.345, 0.0, 1.0, -1.0, 0.55};
+  long double my_out = my_ceil(numbers[_i]);
+  double std_out = ceil(numbers[_i]);
+  ck_assert_ldouble_eq_tol(my_out, std_out, 0.000001);
+
+#test my_ceil_new_2
+  //double test_NaN[4] = {, -MY_NAN, -NAN, NAN};
+  ck_assert_ldouble_nan(my_ceil(my_NAN));
+  ck_assert_ldouble_nan(my_ceil(my_NAN));
+  ck_assert_ldouble_nan(my_ceil(NAN));
+  ck_assert_ldouble_nan(my_ceil(-NAN));
+
+#test my_ceil_new_3
+  //double test_Infinity[4] = {INFINITY, -INFINITY, MY_INFINITY, -MY_INFINITY};
+  ck_assert_ldouble_infinite(my_ceil(INFINITY));
+  ck_assert_ldouble_infinite(my_ceil(-INFINITY));
+  ck_assert_ldouble_infinite(my_ceil(-MY_INFINITY));
+  ck_assert_ldouble_infinite(my_ceil(MY_INFINITY));

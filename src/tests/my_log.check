@@ -1,0 +1,35 @@
+#include <check.h>
+#include <math.h>
+#include <stdio.h>
+
+#include "my_math.h"
+
+#test my_log_test
+  for (double i = 0.01; i <= 1000; i += 0.1) {
+    long double my_res = my_log(i);
+    long double res = log(i);
+    //printf("my_res == %Lf\nres == %Lf\n\n", my_res, res);
+
+    ck_assert_double_eq_tol(res, my_res, MY_EPSILON);
+  }
+
+#test my_log_test_zero
+  ck_assert_double_eq(logl(0), my_log(0));
+
+
+#test my_log_test_new_1
+  double numbers[8] = {MY_E, 1, 150, 13, 0.5, 19, 1e-6, 44444444};
+  long double my_out = my_log(numbers[_i]);
+  double std_out = log(numbers[_i]);
+  ck_assert_ldouble_eq_tol(my_out, std_out, 0.000001);
+
+#test my_log_test_new_2
+  double numbers[3] = {MY_INFINITY, INFINITY, 0};
+  long double my_out = my_log(numbers[_i]);
+  double std_out = log(numbers[_i]);
+  ck_assert_ldouble_eq(my_out, std_out);
+
+#test my_log_test_new_3
+  double numbers[8] = {-99,        -95,       -0.5,          -10,
+                       -0.0000999, -INFINITY, -MY_INFINITY, -999};
+  ck_assert_ldouble_nan(my_log(numbers[_i]));

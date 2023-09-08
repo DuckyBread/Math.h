@@ -1,0 +1,76 @@
+#include <check.h>
+#include <math.h>
+#include <stdio.h>
+
+#include "my_math.h"
+
+//#test test_my_pow
+//  for (double i = -5; i < 15; i++) {
+//    for (double j = 0; j <= 30; j += 0.1) {
+//      long double my_res = my_pow(i, j);
+//      long double res = pow(i, j);
+//      long double diff = res - my_res;
+//      //printf(
+//      //    "base == %.10lf\nexp == %.10lf\nmy_pow == %.10Lf\npow == %.10Lf\n"
+//      //    "diff == %.10Lf\n\n",
+//      //    i, j, my_res, res, diff);
+//      ck_assert_ldouble_eq_tol(my_res, res, MY_EPSILON);
+//    }
+//  }
+
+#test test_my_pow_new_1
+  double base[8] = {1.246753, 5.6, 8.2, 3.454, -1, 5.434, 1.2332, 1};
+  double exp1[8] = {34.434, 4.234, 7.454, 0.00, MY_INFINITY, 8.2, 5.6, 1};
+  long double my_out = my_pow(base[_i], exp1[_i]);
+  long double std_out = pow(base[_i], exp1[_i]);
+  ck_assert_ldouble_eq_tol(my_out, std_out, 0.000001);
+
+#test test_my_pow_new_2
+  double base[8] = {2, 2, -3};
+  double exp1[8] = {NAN, -my_NAN, 1.5};
+  ck_assert_ldouble_nan(my_pow(base[_i], exp1[_i]));
+
+#test test_my_pow_new_3
+  double base[8] = {323, 0.0, -0.0, -MY_INFINITY, MY_INFINITY, 0, 5, 0.2};
+  double exp1[8] = {344343.434, -4.234,        -7.454,       2.00,
+                    3.454,      -MY_INFINITY, MY_INFINITY, -MY_INFINITY};
+  ck_assert_ldouble_infinite(my_pow(base[_i], exp1[_i]));
+
+#test test_my_pow_new_4
+  double base[8] = {MY_INFINITY, -MY_INFINITY, 33.68, 0.34, 3.75, -9};
+  double exp1[8] = {-5, -6.1, 3, MY_INFINITY, -MY_INFINITY, 7};
+  long double my_out = my_pow(base[_i], exp1[_i]);
+  long double std_out = pow(base[_i], exp1[_i]);
+  ck_assert_ldouble_eq_tol(my_out, std_out, 0.000001);
+
+#test test_my_pow_new_5
+  long double my_out = my_pow(-MY_INFINITY, 7);
+  long double std_out = pow(-MY_INFINITY, 7);
+  ck_assert_ldouble_eq(my_out, std_out);
+
+#test test_my_pow_6
+for (double i = -5; i < 5; i++) {
+  for (double j = 0; j <= 10; j += 0.1) {
+    long double my_res = my_pow(i, j);
+    long double res = pow(i, j);
+//    long double diff = res - my_res;
+/*    printf(
+        "base == %.10lf\nexp == %.10lf\nmy_pow == %.10Lf\npow == %.10Lf\n"
+        "diff == %.10Lf\n\n",
+        i, j, my_res, res, diff);*/
+    long double eps = pow(10, floor(log10l(fabsl(res))) - 16);
+    if (eps < 1e-6) {
+      eps = 1e-6;
+    }
+    if (res != res) {
+      ck_assert_ldouble_nan(my_res);
+    } else {
+      if (fabsl(my_res - res) > eps) {
+        printf("\033[34mTest\033[0m my_pow_test \033[31mFAIL\033[0m");
+        printf("\n     arg == %.7f\n     exp == %.7f\n     sys_pow = %.7Lf\n     my_pow = %.7Lf\n", i, j, res, my_res);
+      }
+      ck_assert_ldouble_eq_tol(my_res, res, eps);
+    }
+    
+  }
+}

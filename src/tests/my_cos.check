@@ -1,0 +1,32 @@
+#include <check.h>
+#include <math.h>
+#include <stdio.h>
+
+#include "my_math.h"
+
+#test my_cos_test
+  for (double i = -100; i <= 100; i += 0.1) {
+    ck_assert_double_eq_tol(cosl(i), my_cos(i), MY_EPSILON);
+  }
+
+#test my_cos_test_new_1
+  double numbers[8] = {0.0,         -0.0,      -2.4423423,
+                       -0.12123432, 0.3234535, 5885745862.11223344,
+                       1.43242,     -0.0};
+  long double my_out = my_cos(numbers[_i]);
+  double std_out = cos(numbers[_i]);
+  ck_assert_ldouble_eq_tol(my_out, std_out, 0.000001);
+
+#test my_cos_test_new_2
+  double test_Infinity_NAN[8] = {INFINITY,      MY_INFINITY, -INFINITY,
+                                 -MY_INFINITY, NAN,          -NAN,
+                                 -my_NAN,      my_NAN};
+  ck_assert_ldouble_nan(my_cos(test_Infinity_NAN[_i]));
+
+#test my_cos_test_new_3
+  double numbers[8] = {2.0 * MY_PI,  -2.0 * MY_PI, -MY_PI,
+                       MY_PI / 4.0,  -MY_PI / 4.0, MY_PI / 2.0,
+                       -MY_PI / 2.0, -3 * MY_PI};
+  long double my_out = my_cos(numbers[_i]);
+  double std_out = cos(numbers[_i]);
+  ck_assert_ldouble_eq_tol(my_out, std_out, 0.000001);

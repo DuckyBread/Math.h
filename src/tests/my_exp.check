@@ -1,0 +1,50 @@
+#include <check.h>
+#include <math.h>
+#include <stdio.h>
+
+#include "my_math.h"
+
+//#test my_exp_test
+  //for (double i = 0; i < 30.5; i += 0.5) {
+    //long double my_res = my_exp(i);
+    //long double res = expl(i);
+    //long double diff = res - my_res;
+    //
+    //ck_assert_ldouble_eq_tol(my_exp(i), expl(i), MY_EPSILON);
+  //}
+
+#test my_exp_test_new_1
+  double numbers[8] = {20, 0, 18, -20, 0.0, -0.0, -1.0, 10};
+  long double my_out = my_exp(numbers[_i]);
+  double std_out = exp(numbers[_i]);
+  ck_assert_ldouble_infinite(my_exp(1710));
+
+  ck_assert_ldouble_eq_tol(my_out, std_out, 1e-6);
+
+#test my_exp_test_new_2
+  double test_NaN[4] = {my_NAN, -my_NAN, -NAN, NAN};
+  ck_assert_ldouble_nan(my_exp(test_NaN[_i]));
+
+#test my_exp_test_new_3
+  double test_Infinity[2] = {INFINITY, MY_INFINITY};
+  ck_assert_ldouble_infinite(my_exp(test_Infinity[_i]));
+  ck_assert_ldouble_eq(my_exp(-MY_INFINITY), 0);
+  ck_assert_ldouble_eq(my_exp(-INFINITY), 0);
+
+#test my_exp_test_new_4
+  double numbers[8] = {1, 1.5, 0, -0, 1e-9, 1e-9, 2, 348783};
+  long double my_out = my_sqrt(numbers[_i]);
+  double std_out = sqrt(numbers[_i]);
+  ck_assert_ldouble_eq_tol(my_out, std_out, 0.000001);
+
+
+// e ^ 30 > 10 ^ 13; e ^ -15 < 10 ^ -6
+
+// for (double i = -100; i <= 100; i += 0.1) {
+//   long double my_res = exp(i);
+//   long double res = exp(i);
+//   printf("my_res == %.10Lf\tres == %.10Lf\ndiff == %.10Ls\n\n", my_res,
+//   res,
+//          my_res - res);
+//   ck_assert_double_eq_tol(my_res, res, MY_EPSILON);
+// }
