@@ -1,0 +1,28 @@
+#include <check.h>
+#include <math.h>
+#include <stdio.h>
+
+#include "my_math.h"
+
+#test my_floor_test
+  for (double i = -1000; i <= 10000; i += 0.1) {
+    ck_assert_double_eq_tol(floor(i), my_floor(i), MY_EPSILON);
+  }
+
+#test my_floor_test_new_1
+  double numbers[8] = {50, 0, -23, -66.345, 0.0, 1.0, -1.0, 0.5};
+  long double my_out = my_floor(numbers[_i]);
+  double std_out = floor(numbers[_i]);
+  ck_assert_ldouble_nan(my_floor(my_NAN));
+  ck_assert_ldouble_nan(my_floor(-my_NAN));
+  ck_assert_ldouble_nan(my_floor(-NAN));
+  ck_assert_ldouble_nan(my_floor(NAN));
+  ck_assert_ldouble_eq_tol(my_out, std_out, 0.000001);
+
+#test my_floor_test_new_2
+  double test_NaN[4] = {my_NAN, -my_NAN, -NAN, NAN};
+  ck_assert_ldouble_nan(my_ceil(test_NaN[_i]));
+
+#test my_floor_test_new_3
+  double test_Infinity[4] = {INFINITY, -INFINITY, MY_INFINITY, -MY_INFINITY};
+  ck_assert_ldouble_infinite(my_floor(test_Infinity[_i]));

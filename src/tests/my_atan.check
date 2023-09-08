@@ -1,0 +1,40 @@
+#test my_atan_new_0
+  ck_assert_ldouble_eq_tol(my_atan(42352), atan(42352), MY_EPSILON);
+  ck_assert_ldouble_eq_tol(my_atan(-35363), atan(-35363), MY_EPSILON);
+  ck_assert_ldouble_eq_tol(my_atan(0), atan(0), MY_EPSILON);
+  ck_assert_ldouble_eq_tol(my_atan(-1), atan(-1), MY_EPSILON);
+  ck_assert_ldouble_eq_tol(my_atan(1), atan(1), MY_EPSILON);
+  ck_assert_ldouble_eq_tol(my_atan(0.666666), atan(0.666666), MY_EPSILON);
+  ck_assert_ldouble_eq_tol(my_atan(-0.333333), atan(-0.333333), MY_EPSILON);
+  ck_assert_ldouble_eq_tol(my_atan(57434.574554256), atan(57434.574554256),
+                           MY_EPSILON);
+  ck_assert_ldouble_eq_tol(my_atan(DBL_MAX), atan(DBL_MAX), MY_EPSILON);
+  ck_assert_ldouble_eq_tol(my_atan(DBL_MIN), atan(DBL_MIN), MY_EPSILON);
+  ck_assert_ldouble_nan(my_atan(NAN));
+  ck_assert_ldouble_eq_tol(my_atan(INFINITY), atan(INFINITY), MY_EPSILON);
+  ck_assert_ldouble_eq_tol(my_atan(-INFINITY), atan(-INFINITY), MY_EPSILON);
+
+#test my_atan_new_1
+  double test_NAN[4] = {NAN, -NAN, -my_NAN, my_NAN};
+  ck_assert_ldouble_nan(my_atan(test_NAN[_i]));
+
+#test my_atan_new_2
+  double test_Intfinity[4] = {INFINITY, -INFINITY, -MY_INFINITY, MY_INFINITY};
+  long double my_out = my_atan(test_Intfinity[_i]);
+  double std_out = atan(test_Intfinity[_i]);
+  ck_assert_ldouble_eq_tol(my_out, std_out, 0.000001);
+
+#test my_atan_new_3
+  double numbers[8] = {1,       -1,  1.0, -1.0, 0.3234535, 5885745862.11223344,
+                       1.43242, -0.0};
+  long double my_out = my_atan(numbers[_i]);
+  double std_out = atan(numbers[_i]);
+  ck_assert_ldouble_eq_tol(my_out, std_out, 0.000001);
+
+#test my_atan_new_4
+  double numbers[8] = {0.0,         -0.0,      -2.4423423,
+                       -0.12123432, 0.3234535, 5885745862.11223344,
+                       1.43242,     -0.0};
+  long double my_out = my_atan(numbers[_i]);
+  double std_out = atan(numbers[_i]);
+  ck_assert_ldouble_eq_tol(my_out, std_out, 0.000001);

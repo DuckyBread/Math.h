@@ -1,0 +1,23 @@
+#testmy_acos_new_0
+  ck_assert_int_eq(my_acos(42352), acos(42352));
+  ck_assert_int_eq(my_acos(-35363), acos(-35363));
+  ck_assert_ldouble_eq_tol(my_acos(0), acos(0),MY_EPSILON);
+  ck_assert_ldouble_eq_tol(s21_acos(-1), acos(-1),MY_EPSILON);
+  ck_assert_ldouble_eq_tol(s21_acos(1), acos(1),MY_EPSILON);
+  ck_assert_ldouble_eq_tol(s21_acos(0.666666), acos(0.666666),MY_EPSILON);
+  ck_assert_ldouble_eq_tol(s21_acos(-0.333333), acos(-0.333333),MY_EPSILON);
+  ck_assert_ldouble_eq_tol(s21_acos(0.999999), acos(0.999999),MY_EPSILON);
+  ck_assert_ldouble_eq_tol(s21_acos(-0.888), acos(-0.888),MY_EPSILON);
+  ck_assert_ldouble_eq_tol(s21_acos(DBL_MIN), acos(DBL_MIN),MY_EPSILON);
+  ck_assert_ldouble_nan(s21_acos(NAN));
+  ck_assert_ldouble_nan(s21_acos(DBL_MAX));
+  ck_assert_double_nan(s21_acos(INFINITY));
+  ck_assert_double_nan(s21_acos(-INFINITY));
+
+#testmy_acos_new_1
+  long doublemy_out = 0.0;
+  long double std_out = 0.0;
+  double in[] = {-0, 1, 0.99, 0.167, 1.11e-6};
+ my_out =my_acos(in[_i]);
+  std_out = acos(in[_i]);
+  ck_assert_ldouble_eq_tol(s21_out, std_out, 0.0000001);

@@ -1,0 +1,15 @@
+#include <stdlib.h>
+#include "my_sqrt.c"
+
+#test sqrt_test
+    for (int i = 0; i < 100; i++){
+    ck_assert_double_eq_tol(my_sqrt(i), sqrt(i), MY_EPSILON);
+    }
+
+#test sqrt_test_new_1
+  double numbers[8] = {0.08498403984, MY_PI, 2.4423423423, MY_PI / 2, 1,
+                       199349989,     1.43242,  3.434242};
+  long double my_out = my_sqrt(numbers[_i]);
+  double std_out = sqrt(numbers[_i]);
+  ck_assert_ldouble_eq_tol(my_out, std_out, 0.000001);
+  ck_assert_ldouble_nan(my_sqrt(-3));

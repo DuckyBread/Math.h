@@ -1,0 +1,30 @@
+#include <check.h>
+#include <math.h>
+
+#include "my_math.h"
+
+#test my_fmod_test
+  for (double i = 0; i <= 100000; i += MY_E) {
+    ck_assert_double_eq_tol(fmod(i, 1), my_fmod(i, 1), MY_EPSILON);
+    ck_assert_double_eq_tol(fmod(-i, 1), my_fmod(-i, 1), MY_EPSILON);
+    ck_assert_double_eq_tol(fmod(i, MY_PI), my_fmod(i, MY_PI), MY_EPSILON);
+    ck_assert_double_eq_tol(fmod(-i, MY_PI), my_fmod(-i, MY_PI), MY_EPSILON);
+    ck_assert_double_eq_tol(fmod(i, -1), my_fmod(i, -1), MY_EPSILON);
+    ck_assert_double_eq_tol(fmod(-i, -1), my_fmod(-i, -1), MY_EPSILON);
+    ck_assert_double_eq_tol(fmod(i, -MY_PI), my_fmod(i, -MY_PI), MY_EPSILON);
+    ck_assert_double_eq_tol(fmod(-i, -MY_PI), my_fmod(-i, -MY_PI),
+                            MY_EPSILON);
+  }
+
+#test my_fmod_test_new_1
+  double numbers1[8] = {22222, 22222, 10, -10, -0.0058735, -9099799, 0.0, -0.0};
+  double numbers2[8] = {0.4, 0.5, -6, 10, 8888, -INFINITY, MY_INFINITY, -999};
+  long double my_out = my_fmod(numbers1[_i], numbers2[_i]);
+  long double std_out = fmod(numbers1[_i], numbers2[_i]);
+  ck_assert_ldouble_eq_tol(my_out, std_out, 0.000001);
+
+#test my_fmod_test_new_2
+  double numbers1[8] = {-INFINITY, MY_INFINITY, INFINITY, -MY_INFINITY};
+  double numbers2[8] = {0.4, 5555, -6, 10};
+  long double my_out = my_fmod(numbers1[_i], numbers2[_i]);
+  ck_assert_ldouble_nan(my_out);
